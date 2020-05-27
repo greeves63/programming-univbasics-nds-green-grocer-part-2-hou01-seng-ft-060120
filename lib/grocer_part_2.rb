@@ -1,7 +1,17 @@
 require_relative './part_1_solution.rb'
 
 def apply_coupons(cart, coupons)
-  
+  coupons_applied = {}
+  coupons.each do |coupon|
+    if cart.key?(coupon[:item])
+      coupon_count = 0
+      until coupon[:num] > cart[coupon[:item]][:count]
+        cart[coupon[:item]][:count] -= coupon[:num]
+        cart["#{coupon[:item]} W/COUPON"] = {price: coupon[:cost], clearance: cart[coupon[:item]][:clearance], count: coupon_count += 1}
+      end
+    end
+  end
+  cart.merge(coupons_applied)
   
 end
 
